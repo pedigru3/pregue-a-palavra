@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pregue_a_palavra/src/config/app_data.dart' as app_data;
 import 'package:pregue_a_palavra/src/models/item_model.dart';
 import 'package:pregue_a_palavra/src/pages/auth/components/custom_text_field.dart';
@@ -110,14 +111,11 @@ class _HomeTabState extends State<HomeTab> {
           ),
           // Grid
           Expanded(
-            child: GridView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                physics: const BouncingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    childAspectRatio: 9 / 13.8),
+            child: MasonryGridView.count(
+                padding: const EdgeInsets.all(20),
+                crossAxisCount: 2,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 20,
                 itemCount: itens!.length,
                 itemBuilder: (_, index) => ItemTile(item: itens![index])),
           )
