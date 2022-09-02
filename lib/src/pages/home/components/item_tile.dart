@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/models/item_model.dart';
+import 'package:pregue_a_palavra/src/pages/product/product_screen.dart';
 
 class ItemTile extends StatelessWidget {
   const ItemTile({Key? key, required this.item}) : super(key: key);
@@ -9,14 +10,16 @@ class ItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        debugPrint('clique');
-      },
-      child: Stack(
-        children: [
-          //Card
-          Card(
+    return Stack(
+      children: [
+        //Conteúdo
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (c) {
+              return const ProductScreen();
+            }));
+          },
+          child: Card(
             elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -66,31 +69,31 @@ class ItemTile extends StatelessWidget {
               ),
             ),
           ),
-          //Botão
-          Positioned(
-            top: 2,
-            right: 2,
-            child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                width: 32,
-                height: 42,
-                decoration: BoxDecoration(
-                  color: CustomColors.primaryColor,
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      topRight: Radius.circular(10)),
-                ),
-                child: const Icon(
-                  Icons.shopping_bag_outlined,
-                  color: Colors.white,
-                  size: 18,
-                ),
+        ),
+        //Botão
+        Positioned(
+          top: 2,
+          right: 2,
+          child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              width: 32,
+              height: 42,
+              decoration: BoxDecoration(
+                color: CustomColors.primaryColor,
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    topRight: Radius.circular(10)),
+              ),
+              child: const Icon(
+                Icons.shopping_bag_outlined,
+                color: Colors.white,
+                size: 18,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
