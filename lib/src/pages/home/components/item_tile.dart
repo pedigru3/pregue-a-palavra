@@ -16,7 +16,7 @@ class ItemTile extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (c) {
-              return const ProductScreen();
+              return ProductScreen(item: item);
             }));
           },
           child: Card(
