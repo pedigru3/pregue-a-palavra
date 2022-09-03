@@ -29,10 +29,13 @@ class ItemTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Imagem
-                  Image(
-                    width: 300,
-                    fit: BoxFit.contain,
-                    image: NetworkImage(item.img),
+                  Hero(
+                    tag: item.img,
+                    child: Image(
+                      width: 300,
+                      fit: BoxFit.contain,
+                      image: NetworkImage(item.img),
+                    ),
                   ),
 
                   // Nome do Produto
