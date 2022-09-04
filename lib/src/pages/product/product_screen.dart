@@ -4,14 +4,22 @@ import 'package:pregue_a_palavra/src/models/item_model.dart';
 import 'package:pregue_a_palavra/src/pages/common_widgets/quantity_widget.dart';
 import 'package:pregue_a_palavra/src/services/util_services.dart';
 
-class ProductScreen extends StatelessWidget {
+class ProductScreen extends StatefulWidget {
   ProductScreen({
     Key? key,
     required this.item,
   }) : super(key: key);
 
   final ItemModel item;
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
   final UtilServices utilServices = UtilServices();
+
+  int cartItemQuantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +35,10 @@ class ProductScreen extends StatelessWidget {
                 Expanded(
                   child: SafeArea(
                     child: Hero(
-                      
-                        tag: item.img,
+                        tag: widget.item.img,
                         child: Image.network(
-                          
-                          item.img,
+                          widget.item.img,
                           fit: BoxFit.contain,
-                          
                         )),
                   ),
                 ),
@@ -59,7 +64,7 @@ class ProductScreen extends StatelessWidget {
                               Expanded(
                                 //Nome do Livro
                                 child: Text(
-                                  item.title,
+                                  widget.item.title,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
@@ -68,7 +73,15 @@ class ProductScreen extends StatelessWidget {
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              QuantityWidget()
+
+                              //Botão Quantidade
+                              QuantityWidget(
+                                  value: cartItemQuantity,
+                                  result: (qnt) {
+                                    setState(() {
+                                      cartItemQuantity = qnt;
+                                    });
+                                  })
                             ],
                           ),
 
