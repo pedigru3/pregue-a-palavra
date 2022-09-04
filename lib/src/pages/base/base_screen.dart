@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/pages/bible/bible_tab.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
+import 'package:pregue_a_palavra/src/pages/cart/cart_tab.dart';
 import 'package:pregue_a_palavra/src/pages/home/home_tab.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -22,9 +23,7 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: pageController,
         children: [
           const HomeTab(),
-          Container(
-            color: Colors.blue,
-          ),
+          CartTab(),
           Container(
             color: Colors.green,
           ),

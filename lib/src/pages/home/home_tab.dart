@@ -9,6 +9,8 @@ import 'package:pregue_a_palavra/src/pages/home/components/category_tile.dart';
 import 'package:pregue_a_palavra/src/pages/home/components/item_tile.dart';
 import 'package:pregue_a_palavra/src/services/remote_service.dart';
 
+import '../cart/cart_tab.dart';
+
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
 
@@ -55,7 +57,10 @@ class _HomeTabState extends State<HomeTab> {
           Padding(
             padding: const EdgeInsets.only(right: 15, top: 15),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CartTab()));
+              },
               child: Badge(
                 position: const BadgePosition(top: 10, start: 10),
                 badgeColor: CustomColors.primaryColor,
