@@ -27,6 +27,7 @@ class QuantityWidget extends StatelessWidget {
         ],
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           _QuantityButton(
             icon: Icons.remove,
@@ -71,7 +72,7 @@ class _QuantityButton extends StatelessWidget {
     required this.onPressed,
   }) : super(key: key);
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Material(
       child: InkWell(
