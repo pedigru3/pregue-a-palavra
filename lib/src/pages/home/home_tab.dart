@@ -24,6 +24,7 @@ class _HomeTabState extends State<HomeTab> {
   List<ItemModel>? itens = [];
   bool isLoaded = false;
 
+/*
   @override
   void initState() {
     super.initState();
@@ -38,7 +39,7 @@ class _HomeTabState extends State<HomeTab> {
         isLoaded = true;
       });
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -121,8 +122,9 @@ class _HomeTabState extends State<HomeTab> {
                 crossAxisCount: 2,
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 20,
-                itemCount: itens!.length,
-                itemBuilder: (_, index) => ItemTile(item: itens![index])),
+                itemCount: app_data.listItems.length,
+                itemBuilder: (_, index) =>
+                    ItemTile(item: app_data.listItems[index])),
           )
         ],
       ),

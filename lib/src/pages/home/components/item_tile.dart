@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/models/item_model.dart';
 import 'package:pregue_a_palavra/src/pages/product/product_screen.dart';
+import 'package:pregue_a_palavra/src/services/util_services.dart';
 
 class ItemTile extends StatelessWidget {
-  const ItemTile({Key? key, required this.item}) : super(key: key);
+  ItemTile({Key? key, required this.item}) : super(key: key);
 
   final ItemModel item;
+  final UtilServices utilServices = UtilServices();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +54,7 @@ class ItemTile extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        item.normalPrice,
+                        utilServices.priceToCurrency(item.normalPrice),
                         style: const TextStyle(
                             fontSize: 12,
                             decoration: TextDecoration.lineThrough),
@@ -61,7 +63,7 @@ class ItemTile extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        item.promoPrice,
+                        utilServices.priceToCurrency(item.promoPrice),
                         style: TextStyle(
                             color: CustomColors.secondaryColor,
                             fontWeight: FontWeight.bold),

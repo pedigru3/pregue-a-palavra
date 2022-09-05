@@ -5,7 +5,7 @@ import 'package:pregue_a_palavra/src/pages/common_widgets/quantity_widget.dart';
 import 'package:pregue_a_palavra/src/services/util_services.dart';
 
 class ProductScreen extends StatefulWidget {
-  ProductScreen({
+  const ProductScreen({
     Key? key,
     required this.item,
   }) : super(key: key);
@@ -89,7 +89,8 @@ class _ProductScreenState extends State<ProductScreen> {
                           Row(
                             children: [
                               Text(
-                                utilServices.priceToCurrency(50.99),
+                                utilServices
+                                    .priceToCurrency(widget.item.normalPrice),
                                 style: const TextStyle(
                                     fontSize: 23,
                                     color: Color.fromARGB(255, 112, 112, 112),
@@ -99,7 +100,8 @@ class _ProductScreenState extends State<ProductScreen> {
                                 width: 10,
                               ),
                               Text(
-                                utilServices.priceToCurrency(34.99),
+                                utilServices
+                                    .priceToCurrency(widget.item.promoPrice),
                                 style: TextStyle(
                                   fontSize: 23,
                                   color: CustomColors.secondaryColor,
@@ -110,13 +112,15 @@ class _ProductScreenState extends State<ProductScreen> {
                           ),
 
                           //Descrição do livro
-                          const Expanded(
+                          Expanded(
                             child: Padding(
-                              padding: EdgeInsets.only(top: 15, bottom: 5),
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 5),
                               child: SingleChildScrollView(
                                 child: Text(
-                                  'Diz o Pregador que há um tempo para tudo: nascer e morrer, plantar e colher, derrubar e edificar, chorar e rir, prantear e dançar. Há tempo para tudo mesmo! "Isto é filtro" solar nos ajuda a enxergar em nossa própria vida essas diferentes manifestações do tempo. Conduzindo-nos por uma profusão de referências musicais, literárias e cinematográficas, o Rev. Emilio põe diante de nossos olhos a efemeridade das coisas da terra e nosso desejo ardente de que algo seja permanente. Visto apenas debaixo do sol, este é de fato um mundo estranho, em que tristeza e tragédia nos tocam, o trabalho e as lutas são recorrentes, mas a alegria, o contentamento e o senso de direção se mostram a nós, mas logo desaparecem, como o mestre dos magos em Caverna do Dragão. Ainda assim, as pequenas alegrias que gozamos são indícios de que não pertencemos exclusivamente a este mundo debaixo do sol. O próprio Deus, ao encarnar-se, desceu do mundo acima do sol para nos fazer ver que a vida não se restringe ao tempo e que a eternidade está em nosso coração. Emilio não nos engana: quando o livro de Eclesiastes põe diante de nós verdades aparentemente paradoxais, somos levados à conclusão de que, na verdade, o problema está em nós, não no texto. Enfim, este que já foi chamado de o livro mais mal-humorado da Bíblia se mostra de maneira especialmente luminosa com a luz que vem de acima do sol. O que o Emilio faz é apenas nos ajudar a limpar as lentes dos óculos. Óculos de sol, com filtro UV, evidentemente.',
-                                  style: TextStyle(fontSize: 16, height: 1.4),
+                                  widget.item.description,
+                                  style: const TextStyle(
+                                      fontSize: 16, height: 1.4),
                                 ),
                               ),
                             ),
