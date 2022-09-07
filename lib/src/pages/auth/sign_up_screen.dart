@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:pregue_a_palavra/src/pages/auth/components/custom_text_field.dart';
+import 'package:pregue_a_palavra/src/pages/common_widgets/custom_text_field.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
+import 'package:pregue_a_palavra/src/services/mask_text_services.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -9,14 +9,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final cpfFormatter = MaskTextInputFormatter(
-      mask: "###.###.###-##",
-      filter: {'#': RegExp(r'[0-9]')},
-    );
-    final phoneFormatter = MaskTextInputFormatter(
-      mask: "## # ####-####",
-      filter: {'#': RegExp(r'[0-9]')},
-    );
+    MaskText inputFormatter = MaskText();
 
     return Scaffold(
       backgroundColor: CustomColors.backgroundColor,
@@ -79,13 +72,13 @@ class SignUpScreen extends StatelessWidget {
                       CustomTextField(
                         labelText: "Celular",
                         prefixIcon: Icons.phone,
-                        inputFormatters: [phoneFormatter],
+                        inputFormatters: [inputFormatter.phonePhormatter()],
                         textInputType: TextInputType.phone,
                       ),
                       CustomTextField(
                         labelText: "CPF",
                         prefixIcon: Icons.file_copy,
-                        inputFormatters: [cpfFormatter],
+                        inputFormatters: [inputFormatter.cpfFormatter()],
                         textInputType: TextInputType.number,
                       ),
                       SizedBox(

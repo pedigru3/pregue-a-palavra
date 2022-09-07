@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pregue_a_palavra/src/config/app_data.dart' as app_data;
 import 'package:pregue_a_palavra/src/models/item_model.dart';
-import 'package:pregue_a_palavra/src/pages/auth/components/custom_text_field.dart';
+import 'package:pregue_a_palavra/src/pages/common_widgets/custom_text_field.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/pages/home/components/category_tile.dart';
 import 'package:pregue_a_palavra/src/pages/home/components/item_tile.dart';

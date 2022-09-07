@@ -12,6 +12,8 @@ class CustomTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final Color? backgroundColor;
   final bool removeBorder;
+  final String? initialValue;
+  final bool isReadMode;
 
   const CustomTextField(
       {Key? key,
@@ -23,7 +25,9 @@ class CustomTextField extends StatefulWidget {
       this.textInputType,
       this.inputFormatters,
       this.backgroundColor,
-      this.removeBorder = false})
+      this.removeBorder = false,
+      this.initialValue,
+      this.isReadMode = false})
       : super(key: key);
 
   @override
@@ -40,6 +44,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: TextFormField(
+        readOnly: widget.isReadMode,
+        initialValue: widget.initialValue,
         decoration: InputDecoration(
             filled: widget.backgroundColor != null ? true : false,
             fillColor: widget.backgroundColor,

@@ -3,6 +3,7 @@ import 'package:pregue_a_palavra/src/pages/bible/bible_tab.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/pages/cart/cart_tab.dart';
 import 'package:pregue_a_palavra/src/pages/home/home_tab.dart';
+import 'package:pregue_a_palavra/src/pages/profile/profile_tab.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({Key? key}) : super(key: key);
@@ -23,13 +24,11 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: pageController,
         children: [
           const HomeTab(),
-          CartTab(),
-          Container(
-            color: Colors.green,
-          ),
+          const CartTab(),
           Container(
             color: Colors.yellow,
           ),
+          ProfileTab(),
           const BibleTab(),
         ],
       ),

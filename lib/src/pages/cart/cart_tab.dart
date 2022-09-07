@@ -26,6 +26,7 @@ class _CartTabState extends State<CartTab> {
     for (var item in appData.cartItems) {
       total += item.totalPrice();
     }
+
     return total;
   }
 
