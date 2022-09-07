@@ -73,7 +73,7 @@ class ProfileTab extends StatelessWidget {
                         BorderSide(width: 1, color: CustomColors.primaryColor)),
                 onPressed: () {},
                 child: Text(
-                  "Atualizar senha",
+                  "Atualizar minha senha",
                   style: TextStyle(color: CustomColors.primaryColor),
                 )),
           ),
