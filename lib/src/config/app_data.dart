@@ -53,15 +53,29 @@ UserModel user = UserModel(
 
 List<OrderModel> orders = [
   OrderModel(
-    copyAndPast: 'dfdsaf',
+    copyAndPast: '#kdkd',
     createdDateTime: DateTime.parse('2021-06-08 10:00:10.434'),
     overdueDateTime: DateTime.parse('2021-06-11 10:00:10.434'),
-    id: 'kakjsd',
+    id: '#1293094d',
     status: 'pending_payment',
     total: 120,
     items: [
       CartItemModel(item: listItems[1], quantity: 2),
       CartItemModel(item: listItems[2], quantity: 1),
+      CartItemModel(item: listItems[0], quantity: 1),
+    ],
+  ),
+  OrderModel(
+    copyAndPast: '#kdkd',
+    createdDateTime: DateTime.parse('2021-06-08 10:00:10.434'),
+    overdueDateTime: DateTime.parse('2022-11-26 10:00:10.434'),
+    id: '#1293094d',
+    status: 'refunded',
+    total: 120,
+    items: [
+      CartItemModel(item: listItems[1], quantity: 2),
+      CartItemModel(item: listItems[2], quantity: 1),
+      CartItemModel(item: listItems[0], quantity: 1),
     ],
   ),
 ];

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/models/order_model.dart';
+import 'package:pregue_a_palavra/src/pages/cart/components/ordem_status_widget.dart';
 import 'package:pregue_a_palavra/src/services/util_services.dart';
 
 class OrderTile extends StatelessWidget {
@@ -35,29 +37,26 @@ class OrderTile extends StatelessWidget {
               height: 150,
               child: Row(
                 children: [
+                  //Lista de Produtos
                   Flexible(
                     flex: 3,
-                    child: ListView(
-                      children: order.items.map((ordem) {
-                        return Row(
-                          children: [
-                            Text(
-                              '${ordem.quantity} un.',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              ordem.item.title,
-                            ),
-                          ],
-                        );
-                      }).toList(),
-                    ),
+                    child: _OrdemItemWidget(
+                        order: order, utlServices: utlServices),
                   ),
+
+                  //Divisão
+                  VerticalDivider(
+                    width: 8,
+                    thickness: 2,
+                    color: Colors.grey.shade300,
+                  ),
+
+                  //Status de pedido
                   Flexible(
                     flex: 2,
-                    child: Container(
-                      color: Colors.blue,
+                    child: OrderStatusWidget(
+                      isOverdue: order.overdueDateTime.isBefore(DateTime.now()),
+                      status: order.status,
                     ),
                   )
                 ],
@@ -66,6 +65,50 @@ class OrderTile extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _OrdemItemWidget extends StatelessWidget {
+  const _OrdemItemWidget({
+    Key? key,
+    required this.order,
+    required this.utlServices,
+  }) : super(key: key);
+
+  final OrderModel order;
+  final UtilServices utlServices;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: order.items.map((ordem) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Wrap(
+            children: [
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: '${ordem.quantity} un. ',
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(
+                      text: "${ordem.item.title} ",
+                    ),
+                    TextSpan(
+                      text: utlServices.priceToCurrency(ordem.item.promoPrice),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: CustomColors.secondaryColor),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }

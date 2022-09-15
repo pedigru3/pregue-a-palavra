@@ -33,6 +33,7 @@ class _CartTabState extends State<CartTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         backgroundColor: CustomColors.primaryColor,
         title: const Text('Carrinho'),
