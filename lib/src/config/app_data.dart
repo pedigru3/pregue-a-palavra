@@ -1,5 +1,6 @@
 import 'package:pregue_a_palavra/src/models/cart_item_model.dart';
 import 'package:pregue_a_palavra/src/models/item_model.dart';
+import 'package:pregue_a_palavra/src/models/order_model.dart';
 import 'package:pregue_a_palavra/src/models/user_model.dart';
 
 List<String> categories = [
@@ -43,8 +44,24 @@ List<CartItemModel> cartItems = [
 ];
 
 UserModel user = UserModel(
-    name: 'Felipe Ferreira da Silva',
-    email: 'ferreira@pregueapalavra.com',
-    phone: '(11) 94344-4434',
-    cpf: '432.532.095-56',
-    password: '123abc');
+  name: 'Felipe Ferreira da Silva',
+  email: 'ferreira@pregueapalavra.com',
+  phone: '(11) 94344-4434',
+  cpf: '432.532.095-56',
+  password: '123abc',
+);
+
+List<OrderModel> orders = [
+  OrderModel(
+    copyAndPast: 'dfdsaf',
+    createdDateTime: DateTime.parse('2021-06-08 10:00:10.434'),
+    overdueDateTime: DateTime.parse('2021-06-11 10:00:10.434'),
+    id: 'kakjsd',
+    status: 'pending_payment',
+    total: 120,
+    items: [
+      CartItemModel(item: listItems[1], quantity: 2),
+      CartItemModel(item: listItems[2], quantity: 1),
+    ],
+  ),
+];
