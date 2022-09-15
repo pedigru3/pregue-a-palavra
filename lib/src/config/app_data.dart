@@ -55,7 +55,7 @@ List<OrderModel> orders = [
   OrderModel(
     copyAndPast: '#kdkd',
     createdDateTime: DateTime.parse('2021-06-08 10:00:10.434'),
-    overdueDateTime: DateTime.parse('2021-06-11 10:00:10.434'),
+    overdueDateTime: DateTime.parse('2022-09-16 10:00:10.434'),
     id: '#1293094d',
     status: 'pending_payment',
     total: 120,
@@ -70,7 +70,7 @@ List<OrderModel> orders = [
     createdDateTime: DateTime.parse('2021-06-08 10:00:10.434'),
     overdueDateTime: DateTime.parse('2022-11-26 10:00:10.434'),
     id: '#1293094d',
-    status: 'refunded',
+    status: 'delivered',
     total: 120,
     items: [
       CartItemModel(item: listItems[1], quantity: 2),

@@ -26,7 +26,13 @@ class OrderStatusWidget extends StatelessWidget {
       children: [
         const _StatusDot(isActive: true, title: 'Pedido confirmado'),
         _CustomDivider(),
-        if (isOverdue) ...[
+        if (currentStatus == 1) ...[
+          const _StatusDot(
+            isActive: true,
+            title: 'Pix estornado',
+            backgroundColor: Colors.yellow,
+          )
+        ] else if (isOverdue) ...[
           const _StatusDot(
             isActive: true,
             title: 'Pix vencido',
@@ -34,25 +40,24 @@ class OrderStatusWidget extends StatelessWidget {
           )
         ] else ...[
           _StatusDot(
-            isActive: currentStatus == status,
+            isActive: currentStatus >= 2,
             title: 'Pagamento',
           ),
           const _CustomDivider(),
           _StatusDot(
-            isActive: currentStatus == status,
+            isActive: currentStatus >= 3,
             title: 'Preparando',
           ),
           const _CustomDivider(),
           _StatusDot(
-            isActive: currentStatus == status,
+            isActive: currentStatus >= 4,
             title: 'Envio',
           ),
           const _CustomDivider(),
           _StatusDot(
-            isActive: currentStatus == status,
+            isActive: currentStatus == 5,
             title: 'Entregue',
           ),
-          const _CustomDivider(),
         ],
       ],
     );
