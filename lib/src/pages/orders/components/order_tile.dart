@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/models/order_model.dart';
 import 'package:pregue_a_palavra/src/pages/cart/components/ordem_status_widget.dart';
+import 'package:pregue_a_palavra/src/pages/common_widgets/payment_dialog.dart';
 import 'package:pregue_a_palavra/src/services/util_services.dart';
 
 class OrderTile extends StatelessWidget {
@@ -40,7 +41,7 @@ class OrderTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //Lista de Produtos
-                  Flexible(
+                  Expanded(
                     flex: 3,
                     child: SizedBox(
                       height: 150,
@@ -57,7 +58,7 @@ class OrderTile extends StatelessWidget {
                   ),
 
                   //Status de pedido
-                  Flexible(
+                  Expanded(
                     flex: 2,
                     child: OrderStatusWidget(
                       isOverdue: order.overdueDateTime.isBefore(DateTime.now()),
@@ -94,7 +95,14 @@ class OrderTile extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20))),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return PaymentDialog(order: order,);
+                    },
+                  );
+                },
                 icon: Image.asset(
                   'images/pix.png',
                   height: 18,
