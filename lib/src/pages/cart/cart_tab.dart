@@ -37,7 +37,7 @@ class _CartTabState extends State<CartTab> {
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         backgroundColor: CustomColors.primaryColor,
-        title: const Text('Carrinho'),
+        title: Text('Carrinho'),
       ),
       body: Column(
         children: [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/pages/auth/sign_in_screen.dart';
 
 void main() {
+  
   runApp(const MyApp());
 }
 
