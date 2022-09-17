@@ -10,7 +10,7 @@ class BibleRepository {
   Map<String,String>? headerBible = {
     'Content-Type': 'application/json',
     'Authorization':
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlRodSBTZXAgMTUgMjAyMiAxOToxMDoxMSBHTVQrMDAwMC5mZXJyZWlyYS5jb250YXRvMUBnbWFpbC5jb20iLCJpYXQiOjE2NjMyNjkwMTF9._E-zPYgk4_y3s5NNWtvnzAbgJ-nz_7zTgEpJy5hHt1o'
+        'x'
   };
 
   BibleRepository(this.client);
