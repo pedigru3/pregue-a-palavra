@@ -5,9 +5,16 @@ import 'package:pregue_a_palavra/src/pages/product/product_screen.dart';
 import 'package:pregue_a_palavra/src/services/util_services.dart';
 
 class ItemTile extends StatelessWidget {
-  ItemTile({Key? key, required this.item}) : super(key: key);
-
   final ItemModel item;
+  final void Function(GlobalKey) cartAnimationMethod;
+  final GlobalKey imageGK = GlobalKey();
+
+  ItemTile({
+    Key? key,
+    required this.item,
+    required this.cartAnimationMethod,
+  }) : super(key: key);
+
   final UtilServices utilServices = UtilServices();
 
   @override

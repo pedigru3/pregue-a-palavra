@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "47.0.0"
+  add_to_cart_animation:
+    dependency: "direct main"
+    description:
+      name: add_to_cart_animation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.7"
   analyzer:
     dependency: transitive
     description:

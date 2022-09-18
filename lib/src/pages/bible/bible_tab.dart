@@ -14,7 +14,6 @@ class BibleTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('criou árvore');
     return Scaffold(
         appBar: AppBar(
             title:
@@ -27,20 +26,20 @@ class BibleTab extends StatelessWidget {
           },
         )),
         body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Center(
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               TextField(
                 controller: textController,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               GetX<ValueController>(
                   init: valueController,
                   builder: (crtl) {
                     return crtl.isLoading.value
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : ElevatedButton(
                             onPressed: () {
                               String value = textController.text;
@@ -49,7 +48,7 @@ class BibleTab extends StatelessWidget {
 
                               valueController.setValue(value);
                             },
-                            child: Text('Me teste'));
+                            child: const Text('Me teste'));
                   }),
               TextField(
                 controller: nameController,
@@ -58,7 +57,7 @@ class BibleTab extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-             GetX<ValueController>(
+              GetX<ValueController>(
                 init: valueController,
                 initState: (_) {},
                 builder: (ctrl) {
