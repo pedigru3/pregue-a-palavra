@@ -1,5 +1,3 @@
-import 'package:add_to_cart_animation/add_to_cart_animation.dart';
-import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -10,7 +8,6 @@ import 'package:pregue_a_palavra/src/pages/common_widgets/custom_text_field.dart
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/pages/home/components/category_tile.dart';
 import 'package:pregue_a_palavra/src/pages/home/components/item_tile.dart';
-
 import '../cart/cart_tab.dart';
 
 class HomeTab extends StatefulWidget {
@@ -24,32 +21,18 @@ class _HomeTabState extends State<HomeTab> {
   String categorySelected = "";
 
   List<ItemModel>? itens = [];
-  bool isLoaded = false;
+  bool isLoaded = true;
 
-  GlobalKey<CartIconKey> globalKeyCartItems = GlobalKey<CartIconKey>();
-
-  late Function(GlobalKey) runAddToCardAnimation;
-
-  void itemSelectedCardAnimations(GlobalKey gkImage) {
-    runAddToCardAnimation(gkImage);
-  }
-
-/*
   @override
   void initState() {
     super.initState();
 
-    getData();
-  }
-
-  getData() async {
-    itens = await RemoteService().getItens();
-    if (itens != null) {
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
-        isLoaded = true;
+        isLoaded = false;
       });
-    }
-  }*/
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,66 +70,57 @@ class _HomeTabState extends State<HomeTab> {
           )
         ],
       ),
-      body: AddToCartAnimation(
-        gkCart: globalKeyCartItems,
-        previewDuration: const Duration(microseconds: 100),
-        previewCurve: Curves.easeIn,
-        receiveCreateAddToCardAnimationMethod: (addToCartAnimationMethod) {
-          runAddToCardAnimation = addToCartAnimationMethod;
-        },
-        child: Column(
-          children: [
-            // Campo de pesquisa
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: CustomTextField(
-                hintText: "Pesquise aqui...",
-                prefixIcon: Icons.search,
-                isDarkMode: false,
-                backgroundColor: Colors.white,
-                removeBorder: true,
-              ),
+      body: Column(
+        children: [
+          // Campo de pesquisa
+          const Padding(
+            padding: EdgeInsets.all(10),
+            child: CustomTextField(
+              hintText: "Pesquise aqui...",
+              prefixIcon: Icons.search,
+              isDarkMode: false,
+              backgroundColor: Colors.white,
+              removeBorder: true,
             ),
-            // Categorias
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              height: 40,
-              child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (_, index) {
-                    return CategoryTile(
-                      onPressed: () {
-                        setState(() {
-                          categorySelected = app_data.categories[index];
-                        });
-                      },
-                      category: app_data.categories[index],
-                      isSelected:
-                          app_data.categories[index] == categorySelected,
-                    );
-                  },
-                  separatorBuilder: (_, index) {
-                    return const SizedBox(
-                      width: 10,
-                    );
-                  },
-                  itemCount: app_data.categories.length),
-            ),
-            // Grid
-            Expanded(
+          ),
+          // Categorias
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            height: 40,
+            child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (_, index) {
+                  return CategoryTile(
+                    onPressed: () {
+                      setState(() {
+                        categorySelected = app_data.categories[index];
+                      });
+                    },
+                    category: app_data.categories[index],
+                    isSelected: app_data.categories[index] == categorySelected,
+                  );
+                },
+                separatorBuilder: (_, index) {
+                  return const SizedBox(
+                    width: 10,
+                  );
+                },
+                itemCount: app_data.categories.length),
+          ),
+          // Grid
+          Expanded(
               child: MasonryGridView.count(
-                padding: const EdgeInsets.all(20),
-                crossAxisCount: 2,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-                itemCount: app_data.listItems.length,
-                itemBuilder: (_, index) => ItemTile(
-                  item: app_data.listItems[index],
-                ),
-              ),
-            )
-          ],
-        ),
+            padding: const EdgeInsets.all(20),
+            crossAxisCount: 2,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            itemCount: app_data.listItems.length,
+            itemBuilder: (_, index) => ItemTile(
+              isLoading: isLoaded,
+              item: app_data.listItems[index],
+            ),
+          ))
+        ],
       ),
     );
   }

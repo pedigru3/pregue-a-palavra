@@ -14,21 +14,25 @@ class CustomTextField extends StatefulWidget {
   final bool removeBorder;
   final String? initialValue;
   final bool isReadMode;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
 
-  const CustomTextField(
-      {Key? key,
-      this.labelText,
-      this.isDarkMode = true,
-      this.hintText,
-      required this.prefixIcon,
-      this.isSecret = false,
-      this.textInputType,
-      this.inputFormatters,
-      this.backgroundColor,
-      this.removeBorder = false,
-      this.initialValue,
-      this.isReadMode = false})
-      : super(key: key);
+  const CustomTextField({
+    Key? key,
+    this.labelText,
+    this.isDarkMode = true,
+    this.hintText,
+    required this.prefixIcon,
+    this.isSecret = false,
+    this.textInputType,
+    this.inputFormatters,
+    this.backgroundColor,
+    this.removeBorder = false,
+    this.initialValue,
+    this.isReadMode = false,
+    this.validator,
+    this.controller,
+  }) : super(key: key);
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -44,12 +48,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: TextFormField(
+        controller: widget.controller,
+        validator: widget.validator,
         readOnly: widget.isReadMode,
         initialValue: widget.initialValue,
         decoration: InputDecoration(
             filled: widget.backgroundColor != null ? true : false,
             fillColor: widget.backgroundColor,
             isDense: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(18),
               borderSide: widget.removeBorder

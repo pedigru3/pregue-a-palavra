@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pregue_a_palavra/src/pages/auth/sign_in_screen.dart';
+import 'package:pregue_a_palavra/src/pages_routes/app_pages.dart';
 
 void main() {
-  
   runApp(const MyApp());
 }
 
@@ -22,7 +21,8 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.blue,
         ),
       ),
-      home: const SignInScreen(),
+      initialRoute: PagesRoute.splashRoute,
+      getPages: AppPages.pages,
     );
   }
 }

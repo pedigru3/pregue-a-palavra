@@ -52,9 +52,9 @@ class BibleTab extends StatelessWidget {
                   }),
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(hintText: 'Qual é o seu nome?'),
+                decoration: const InputDecoration(hintText: 'Qual é o seu nome?'),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               GetX<ValueController>(

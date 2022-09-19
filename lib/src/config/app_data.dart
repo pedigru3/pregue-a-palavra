@@ -1,9 +1,7 @@
-import 'package:pregue_a_palavra/src/models/bible_model.dart';
 import 'package:pregue_a_palavra/src/models/cart_item_model.dart';
 import 'package:pregue_a_palavra/src/models/item_model.dart';
 import 'package:pregue_a_palavra/src/models/order_model.dart';
 import 'package:pregue_a_palavra/src/models/user_model.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 
 List<String> categories = [

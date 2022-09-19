@@ -43,14 +43,16 @@ dependencies:
   qr_flutter: ^4.0.0
   dio: ^4.0.6
   get: ^4.6.5
-  add_to_cart_animation: ^0.0.7
+  fluttertoast: ^8.0.9
+  shimmer: ^2.0.0
+  flutter_launcher_icons: ^0.10.0
+  flutter_native_splash: ^2.2.9
 
 
 dev_dependencies:
   mocktail: ^0.3.0
   flutter_test:
     sdk: flutter
-    
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -58,6 +60,24 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+
+flutter_native_splash:
+  color: "#2f5a7c"
+  image: assets/app/splash.png
+
+  android_12:
+    android: true
+    image: assets/app/splash_12.png
+    color: "#2f5a7c"
+
+flutter_icons:
+  image_path: "assets/app/icon.png"
+  ios: true
+  remove_alpha_ios: true
+  android: "launcher_icon"
+  adaptive_icon_background: "#2f5a7c"
+  adaptive_icon_foreground: "assets/app/icon-android.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -72,6 +92,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/app/
     - images/
     - bible.json
 

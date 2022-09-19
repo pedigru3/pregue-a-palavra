@@ -19,7 +19,6 @@ void main() {
 
     final BibleModel bible = await repository.fetchChapter();
 
-    print(bible);
     expect(bible.chapter.verses, equals(6));
   });
 

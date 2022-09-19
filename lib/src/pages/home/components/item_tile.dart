@@ -6,13 +6,12 @@ import 'package:pregue_a_palavra/src/services/util_services.dart';
 
 class ItemTile extends StatelessWidget {
   final ItemModel item;
-  final void Function(GlobalKey) cartAnimationMethod;
-  final GlobalKey imageGK = GlobalKey();
+  final bool isLoading;
 
   ItemTile({
     Key? key,
     required this.item,
-    required this.cartAnimationMethod,
+    this.isLoading = false,
   }) : super(key: key);
 
   final UtilServices utilServices = UtilServices();
@@ -39,13 +38,12 @@ class ItemTile extends StatelessWidget {
                 children: [
                   // Imagem
                   Hero(
-                    tag: item.img,
-                    child: Image(
-                      width: 300,
-                      fit: BoxFit.contain,
-                      image: NetworkImage(item.img),
-                    ),
-                  ),
+                      tag: item.img,
+                      child: Image(
+                        width: 300,
+                        fit: BoxFit.contain,
+                        image: NetworkImage(item.img),
+                      )),
 
                   // Nome do Produto
                   Padding(
@@ -86,22 +84,19 @@ class ItemTile extends StatelessWidget {
         Positioned(
           top: 2,
           right: 2,
-          child: GestureDetector(
-            onTap: () {},
-            child: Container(
-              width: 32,
-              height: 42,
-              decoration: BoxDecoration(
-                color: CustomColors.primaryColor,
-                borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    topRight: Radius.circular(10)),
-              ),
-              child: const Icon(
-                Icons.shopping_bag_outlined,
-                color: Colors.white,
-                size: 18,
-              ),
+          child: Container(
+            width: 32,
+            height: 42,
+            decoration: BoxDecoration(
+              color: CustomColors.primaryColor,
+              borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  topRight: Radius.circular(10)),
+            ),
+            child: const Icon(
+              Icons.shopping_bag_outlined,
+              color: Colors.white,
+              size: 18,
             ),
           ),
         ),
