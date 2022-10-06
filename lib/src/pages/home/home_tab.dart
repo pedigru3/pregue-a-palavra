@@ -116,7 +116,6 @@ class _HomeTabState extends State<HomeTab> {
             crossAxisSpacing: 20,
             itemCount: app_data.listItems.length,
             itemBuilder: (_, index) => ItemTile(
-              isLoading: isLoaded,
               item: app_data.listItems[index],
             ),
           ))

@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
+import 'package:pregue_a_palavra/src/pages/auth/controller/auth_controller.dart';
 import 'package:pregue_a_palavra/src/pages/common_widgets/custom_text_field.dart';
 import 'package:pregue_a_palavra/src/pages_routes/app_pages.dart';
 
@@ -109,19 +110,38 @@ class SignInScreen extends StatelessWidget {
                       //Entrar
                       SizedBox(
                         height: 48,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              print('campos válidos');
-                            } else {
-                              print('Campos não válidos');
-                            }
-                            // Get.offNamed(PagesRoute.baseRoute);
+                        child: GetX<AuthController>(
+                          builder: (authController) {
+                            return Visibility(
+                              visible: !authController.islooding.value,
+                              replacement: const Align(
+                                alignment: Alignment.center,
+                                child: SizedBox(
+                                  width: 38,
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    FocusScope.of(context).unfocus();
+                                    authController.sigIn(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+                                    Get.offNamed(PagesRoute.baseRoute);
+                                  } else {
+                                    print('Campos não válidos');
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18))),
+                                child: const Text("Entrar"),
+                              ),
+                            );
                           },
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18))),
-                          child: const Text("Entrar"),
                         ),
                       ),
 

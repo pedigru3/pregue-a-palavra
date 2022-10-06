@@ -6,12 +6,10 @@ import 'package:pregue_a_palavra/src/services/util_services.dart';
 
 class ItemTile extends StatelessWidget {
   final ItemModel item;
-  final bool isLoading;
 
   ItemTile({
     Key? key,
     required this.item,
-    this.isLoading = false,
   }) : super(key: key);
 
   final UtilServices utilServices = UtilServices();

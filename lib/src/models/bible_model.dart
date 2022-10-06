@@ -33,20 +33,27 @@ class BibleModel {
       };
 }
 
+List<Book> bookModelFromList(List list) =>
+    List<Book>.from(list.map((x) => Book.fromJson(x)));
+
 class Book {
   Book({
     required this.abbrev,
     required this.name,
     required this.author,
     required this.group,
-    required this.version,
+    this.version,
+    this.chapters,
+    this.testament,
   });
 
   final Abbrev abbrev;
   final String name;
   final String author;
   final String group;
-  final String version;
+  final String? version;
+  final int? chapters;
+  final String? testament;
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
         abbrev: Abbrev.fromJson(json["abbrev"]),
@@ -54,6 +61,8 @@ class Book {
         author: json["author"],
         group: json["group"],
         version: json["version"],
+        chapters: json["chapters"],
+        testament: json["testament"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -62,6 +71,8 @@ class Book {
         "author": author,
         "group": group,
         "version": version,
+        "chapters": chapters,
+        "testament": testament,
       };
 }
 
