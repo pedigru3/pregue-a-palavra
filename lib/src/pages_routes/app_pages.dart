@@ -1,16 +1,16 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/pages/auth/view/sign_in_screen.dart';
 import 'package:pregue_a_palavra/src/pages/auth/view/sign_up_screen.dart';
 import 'package:pregue_a_palavra/src/pages/base/base_screen.dart';
 import 'package:pregue_a_palavra/src/pages/splash/splash_screen.dart';
 
 abstract class AppPages {
-  static final pages = <GetPage>[
-    GetPage(name: PagesRoute.splashRoute, page: () => const SplashScreen()),
-    GetPage(name: PagesRoute.signInRoute, page: () => SignInScreen()),
-    GetPage(name: PagesRoute.signUpRoute, page: () => const SignUpScreen()),
-    GetPage(name: PagesRoute.baseRoute, page: () => const BaseScreen()),
-  ];
+  static final Map<String, Widget Function(BuildContext)> pages = {
+    PagesRoute.splashRoute: (_) => const SplashScreen(),
+    PagesRoute.signInRoute: (_) => SignInScreen(),
+    PagesRoute.signUpRoute: (_) => const SignUpScreen(),
+    PagesRoute.baseRoute: (_) => const BaseScreen(),
+  };
 }
 
 abstract class PagesRoute {

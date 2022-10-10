@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/models/item_model.dart';
+import 'package:pregue_a_palavra/src/pages/cart/controllers/cart_controller.dart';
 import 'package:pregue_a_palavra/src/pages/product/product_screen.dart';
 import 'package:pregue_a_palavra/src/services/util_services.dart';
+import 'package:provider/provider.dart';
 
 class ItemTile extends StatelessWidget {
   final ItemModel item;
@@ -21,7 +23,7 @@ class ItemTile extends StatelessWidget {
         //Conteúdo
         GestureDetector(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (c) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
               return ProductScreen(item: item);
             }));
           },

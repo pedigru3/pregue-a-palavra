@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:pregue_a_palavra/src/pages_routes/app_pages.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
-      Get.offNamed(PagesRoute.signInRoute);
+      Navigator.of(context).pushReplacementNamed(PagesRoute.signInRoute);
     });
   }
 

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/models/cart_item_model.dart';
 import 'package:pregue_a_palavra/src/pages/cart/components/cart_tile.dart';
+import 'package:pregue_a_palavra/src/pages/cart/controllers/cart_controller.dart';
 import 'package:pregue_a_palavra/src/pages/common_widgets/payment_dialog.dart';
 import 'package:pregue_a_palavra/src/services/util_services.dart';
 import 'package:pregue_a_palavra/src/config/app_data.dart' as appData;
+import 'package:provider/provider.dart';
 
 class CartTab extends StatefulWidget {
   const CartTab({Key? key}) : super(key: key);
@@ -33,6 +35,8 @@ class _CartTabState extends State<CartTab> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<CartController>();
+
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(

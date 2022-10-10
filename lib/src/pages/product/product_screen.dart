@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/models/item_model.dart';
+import 'package:pregue_a_palavra/src/pages/cart/controllers/cart_controller.dart';
 import 'package:pregue_a_palavra/src/pages/common_widgets/quantity_widget.dart';
-import 'package:pregue_a_palavra/src/services/util_services.dart'; 
+import 'package:pregue_a_palavra/src/services/util_services.dart';
+import 'package:provider/provider.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({
@@ -23,6 +25,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<CartController>();
     return Scaffold(
         backgroundColor: Colors.white.withAlpha(230),
         body: Stack(
@@ -135,7 +138,9 @@ class _ProductScreenState extends State<ProductScreen> {
                                     shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
-                                onPressed: () {},
+                                onPressed: () {
+                                  controller.addToCart(widget.item);
+                                },
                                 label: const Text(
                                   'Adcionar ao carrinho',
                                   style: TextStyle(

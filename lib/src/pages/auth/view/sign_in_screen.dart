@@ -5,6 +5,7 @@ import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/pages/auth/controller/auth_controller.dart';
 import 'package:pregue_a_palavra/src/pages/common_widgets/custom_text_field.dart';
 import 'package:pregue_a_palavra/src/pages_routes/app_pages.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authController = context.watch<AuthController>();
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -110,38 +112,35 @@ class SignInScreen extends StatelessWidget {
                       //Entrar
                       SizedBox(
                         height: 48,
-                        child: GetX<AuthController>(
-                          builder: (authController) {
-                            return Visibility(
-                              visible: !authController.islooding.value,
-                              replacement: const Align(
-                                alignment: Alignment.center,
-                                child: SizedBox(
-                                  width: 38,
-                                  child: CircularProgressIndicator(),
-                                ),
-                              ),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    FocusScope.of(context).unfocus();
-                                    authController.sigIn(
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                    );
-                                    Get.offNamed(PagesRoute.baseRoute);
-                                  } else {
-                                    print('Campos não válidos');
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(18))),
-                                child: const Text("Entrar"),
-                              ),
-                            );
-                          },
+                        child: Visibility(
+                          visible: !authController.islooding,
+                          replacement: const Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: 38,
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                FocusScope.of(context).unfocus();
+                                authController.sigIn(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
+                                Navigator.of(context)
+                                    .pushReplacementNamed(PagesRoute.baseRoute);
+                              } else {
+                                print('Campos não válidos');
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)),
+                            ),
+                            child: const Text("Entrar"),
+                          ),
                         ),
                       ),
 
@@ -193,7 +192,8 @@ class SignInScreen extends StatelessWidget {
                                       width: 1,
                                       color: CustomColors.backgroundColor)),
                               onPressed: () {
-                                Get.toNamed(PagesRoute.signUpRoute);
+                                Navigator.of(context)
+                                    .pushNamed(PagesRoute.signUpRoute);
                               },
                               child: Text(
                                 "Criar conta",

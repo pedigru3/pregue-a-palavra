@@ -24,17 +24,6 @@ class _HomeTabState extends State<HomeTab> {
   bool isLoaded = true;
 
   @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        isLoaded = false;
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       // App bar
@@ -52,7 +41,9 @@ class _HomeTabState extends State<HomeTab> {
             padding: const EdgeInsets.only(right: 15, top: 15),
             child: GestureDetector(
               onTap: () {
-                Get.to(() => const CartTab());
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const CartTab(),
+                ));
               },
               child: Badge(
                 position: const BadgePosition(top: 10, start: 10),
