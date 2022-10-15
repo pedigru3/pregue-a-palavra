@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/pages/bible/controllers/bible_controller.dart';
 import 'package:pregue_a_palavra/src/pages/bible/views/book_search.dart';
+import 'package:pregue_a_palavra/src/pages/bible/views/chapters_view.dart';
+import 'package:pregue_a_palavra/src/pages/bible/views/loading_bible.dart';
 import 'package:provider/provider.dart';
+
+enum Direction { none, rigth, left }
 
 class BibleTab extends StatefulWidget {
   const BibleTab({Key? key}) : super(key: key);
@@ -12,9 +16,10 @@ class BibleTab extends StatefulWidget {
 }
 
 class _BibleTabState extends State<BibleTab> {
-  final BibleController controller = BibleController();
-  final _book = 'Salmos';
-  final _chapter = '119';
+  final double _fontSize = 16;
+
+  bool active = false;
+  Direction direction = Direction.none;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class _BibleTabState extends State<BibleTab> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  // =========== Botao Versículo ============
+                  // =========== Botao LIVRO ============
                   GestureDetector(
                     onTap: () {
                       showSearch(context: context, delegate: BookSearch());
@@ -40,28 +45,71 @@ class _BibleTabState extends State<BibleTab> {
                           borderRadius: const BorderRadius.horizontal(
                               left: Radius.circular(20))),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 8.0),
+                        padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
                         child: Text(
-                          '$_book $_chapter',
+                          controller.bible.book.name,
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(width: 1),
+
+                  //-------BOTAO CAPÍTULO-------
+                  GestureDetector(
+                    onTap: () async {
+                      int? newChapter =
+                          await Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => ChaptersView(
+                                    book: controller.bible.book,
+                                  )));
+                      controller.setChapter = newChapter ?? 1;
+                      controller.search();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: CustomColors.primaryColor,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 8, 12, 8),
+                        child: Text(
+                          '${controller.bible.chapter.number}',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 1),
+
+                  // ---- BOTAO VERSAO------------
                   Container(
                     decoration: BoxDecoration(
                         color: CustomColors.primaryColor,
                         borderRadius: const BorderRadius.horizontal(
                             right: Radius.circular(20))),
-                    child: const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
                       child: Text(
-                        'NVI',
-                        style: TextStyle(color: Colors.white),
+                        controller.bible.book.version ?? 'NVI',
+                        style: const TextStyle(color: Colors.white),
                       ),
+                    ),
+                  ),
+                  const Expanded(
+                    child: SizedBox(),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.font_download_outlined,
+                      color: CustomColors.primaryColor,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.settings,
+                      color: CustomColors.primaryColor,
                     ),
                   ),
                 ],
@@ -72,33 +120,136 @@ class _BibleTabState extends State<BibleTab> {
               color: Colors.blue,
               thickness: 2,
             ),
+
+            // -------------------------------- VERSES ------------------------
             Expanded(
-              child: GestureDetector(
-                  onHorizontalDragUpdate: ((details) {
-                    print(details.delta.dx > 0);
-                  }),
-                  child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Visibility(
-                        visible: controller.bible != null,
-                        child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            itemCount: controller.bible != null
-                                ? controller.bible!.chapter.verses
-                                : 0,
-                            itemBuilder: (_, index) {
-                              return Text.rich(TextSpan(children: [
-                                TextSpan(
-                                    text:
-                                        '${controller.bible!.verses[index].number}'),
-                                TextSpan(
-                                    text: controller.bible!.verses[index].text)
-                              ]));
-                            }),
-                      ))),
-            )
+              child: Stack(
+                children: [
+                  GestureDetector(
+                      onHorizontalDragUpdate: ((details) {
+                        if (details.delta.dx > 0) {
+                          direction = Direction.rigth;
+                        } else if (details.delta.dx < 0) {
+                          direction = Direction.left;
+                        }
+                      }),
+                      onHorizontalDragEnd: (details) {
+                        if (direction == Direction.rigth) {
+                          controller.previousBook();
+                        } else if (direction == Direction.left) {
+                          controller.nextBook();
+                        }
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Visibility(
+                            visible: !controller.isLoading,
+                            replacement: const Center(
+                              child: LoadingBible(),
+                            ),
+                            child: ListView.builder(
+                                padding:
+                                    const EdgeInsets.only(top: 5, bottom: 50),
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: controller.bible.chapter.verses,
+                                itemBuilder: (_, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: VerseSelectable(
+                                        index: index,
+                                        controller: controller,
+                                        fontSize: _fontSize),
+                                  );
+                                }),
+                          ))),
+                  //----------BUTTOM NEXT------------
+                  Positioned(
+                    right: 10,
+                    bottom: 10,
+                    child: InkWell(
+                      onTap: () {
+                        controller.nextChapter();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: CustomColors.primaryColor),
+                        child: const Icon(
+                          Icons.arrow_right,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 10,
+                    bottom: 10,
+                    child: InkWell(
+                      onTap: () {
+                        controller.previousChapter();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: CustomColors.primaryColor),
+                        child: const Icon(
+                          Icons.arrow_left,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class VerseSelectable extends StatelessWidget {
+  const VerseSelectable({
+    Key? key,
+    required this.controller,
+    required double fontSize,
+    required this.index,
+  })  : _fontSize = fontSize,
+        super(key: key);
+
+  final BibleController controller;
+  final double _fontSize;
+  final int index;
+
+  get active => controller.bible.verses[index].isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => controller.selecionar(index),
+      child: Text.rich(
+        TextSpan(
+            children: [
+              TextSpan(
+                text: '   ${controller.bible.verses[index].number} ',
+                style: TextStyle(fontSize: _fontSize - 5),
+              ),
+              TextSpan(
+                text: controller.bible.verses[index].text,
+                style: TextStyle(
+                    fontSize: _fontSize,
+                    backgroundColor:
+                        active ? Colors.blue.shade100 : Colors.transparent),
+              ),
+            ],
+            style: active
+                ? const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  )
+                : null),
       ),
     );
   }

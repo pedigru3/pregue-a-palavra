@@ -49,7 +49,11 @@ class HttpManagerBible implements HttpManager {
       return response.data;
     } on DioError catch (error) {
       //retorno Dio request
-      return error.response!.data ?? {};
+      if (error.response == null) {
+        return {};
+      } else {
+        return error.response!.data ?? {};
+      }
     } catch (error) {
       // retorno map vazio para erro generalizado
       return {};

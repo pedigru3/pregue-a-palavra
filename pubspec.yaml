@@ -51,6 +51,7 @@ dependencies:
   json_annotation: ^4.7.0
   get: ^4.6.5
   provider: ^6.0.3
+  shared_preferences: ^2.0.15
 
 
 dev_dependencies:

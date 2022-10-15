@@ -13,10 +13,9 @@ class BibleRepository {
       method: HttpMethods.get,
     );
     if (result["verses"] != null) {
-      print('funcionou');
       return result;
     } else {
-      print('funcionou não');
+      print('erro ao buscar dados no servidor');
     }
   }
 

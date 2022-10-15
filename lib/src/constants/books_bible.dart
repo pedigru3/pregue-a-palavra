@@ -1,5 +1,7 @@
+import 'package:pregue_a_palavra/src/models/bible_model.dart';
+
 abstract class BooksBible {
-  static List books = [
+  static const List<Map<String, dynamic>> mockup = [
     {
       "abbrev": {"pt": "gn", "en": "gn"},
       "author": "Moisés",
@@ -530,72 +532,5 @@ abstract class BooksBible {
     }
   ];
 
-  static List<String> searchResults = [
-    'Gênesis',
-    'Êxodo',
-    'Levítico',
-    'Números',
-    'Deuteronômio',
-    'Josué',
-    'Juízes',
-    'Rute',
-    '1º Samuel',
-    '2º Samuel',
-    '1º Reis',
-    '2º Reis',
-    '1º Crônicas',
-    '2º Crônicas',
-    'Esdras',
-    'Neemias',
-    'Ester',
-    'Jó',
-    'Salmos',
-    'Provérbios',
-    'Eclesiastes',
-    'Cânticos',
-    'Isaías',
-    'Jeremias',
-    'Lamentações de Jeremias',
-    'Ezequiel',
-    'Daniel',
-    'Oséias',
-    'Joel',
-    'Amós',
-    'Obadias',
-    'Jonas',
-    'Miquéias',
-    'Naum',
-    'Habacuque',
-    'Sofonias',
-    'Ageu',
-    'Zacarias',
-    'Malaquias',
-    'Mateus',
-    'Marcos',
-    'Lucas',
-    'João',
-    'Atos',
-    'Romanos',
-    '1ª Coríntios',
-    '2ª Coríntios',
-    'Gálatas',
-    'Efésios',
-    'Filipenses',
-    'Colossenses',
-    '1ª Tessalonicenses',
-    '2ª Tessalonicenses',
-    '1ª Timóteo',
-    '2ª Timóteo',
-    'Tito',
-    'Filemom',
-    'Hebreus',
-    'Tiago',
-    '1ª Pedro',
-    '2ª Pedro',
-    '1ª João',
-    '2ª João',
-    '3ª João',
-    'Judas',
-    'Apocalipse'
-  ];
+  static List<Book> books = bookModelFromList(mockup);
 }

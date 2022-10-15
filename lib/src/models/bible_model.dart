@@ -20,6 +20,18 @@ class BibleModel {
   final Chapter chapter;
   final List<Verse> verses;
 
+  copyWith({
+    Book? book,
+    Chapter? chapter,
+    List<Verse>? verses,
+  }) {
+    return BibleModel(
+      book: book ?? this.book,
+      chapter: chapter ?? this.chapter,
+      verses: verses ?? this.verses,
+    );
+  }
+
   factory BibleModel.fromJson(Map<String, dynamic> json) => BibleModel(
         book: Book.fromJson(json["book"]),
         chapter: Chapter.fromJson(json["chapter"]),
@@ -54,6 +66,24 @@ class Book {
   final String? version;
   final int? chapters;
   final String? testament;
+
+  copyWith(
+      {Abbrev? abbrev,
+      String? name,
+      String? author,
+      String? group,
+      String? version,
+      int? chapters,
+      String? testament}) {
+    return Book(
+        abbrev: abbrev ?? this.abbrev,
+        name: name ?? this.name,
+        author: author ?? this.author,
+        group: group ?? this.group,
+        version: version ?? this.version,
+        chapters: chapters ?? this.chapters,
+        testament: testament ?? this.testament);
+  }
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
         abbrev: Abbrev.fromJson(json["abbrev"]),
@@ -117,13 +147,11 @@ class Chapter {
 }
 
 class Verse {
-  Verse({
-    required this.number,
-    required this.text,
-  });
+  Verse({required this.number, required this.text, this.isSelected = false});
 
   final int number;
   final String text;
+  bool isSelected;
 
   factory Verse.fromJson(Map<String, dynamic> json) => Verse(
         number: json["number"],
