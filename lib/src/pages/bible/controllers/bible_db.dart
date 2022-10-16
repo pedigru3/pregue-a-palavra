@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/constants/books_bible.dart';
 import 'package:pregue_a_palavra/src/models/bible_model.dart';
 import 'package:pregue_a_palavra/src/pages/bible/repository/bible_repository.dart';
 
-class WholeBibleController extends ChangeNotifier {
+class BibleDb {
   final bibleRepository = BibleRepository();
-
-  bool isLoading = false;
 
   //Aqui serão alocados todos os dados da bíblia
   Map<String, Map<int, BibleModel>> wholeBible = {};
@@ -21,7 +18,6 @@ class WholeBibleController extends ChangeNotifier {
   }
 
   Future<BibleModel> _search(String abbrev, int chapter) async {
-    isLoading = true;
     Map<String, dynamic> map = await bibleRepository.getverses(abbrev, chapter);
     BibleModel bibleModel = BibleModel.fromJson(map);
 
@@ -32,27 +28,30 @@ class WholeBibleController extends ChangeNotifier {
     }).toList();
     //
 
-    isLoading = false;
-    notifyListeners();
-
     return bibleModel.copyWith(book: book.first);
   }
 
   void _addBible(BibleModel bibleModel) {
-    wholeBible = {
-      bibleModel.book.abbrev.pt: {
-        bibleModel.chapter.number: bibleModel,
-      }
-    };
+    if (wholeBible[bibleModel.book.abbrev.pt] == null) {
+      wholeBible[bibleModel.book.abbrev.pt] = {
+        bibleModel.chapter.number: bibleModel
+      };
+    } else {
+      wholeBible[bibleModel.book.abbrev.pt]?[bibleModel.chapter.number] =
+          bibleModel;
+    }
   }
 
   Future<BibleModel> getData(String abbrev, int chapter) async {
     if (_isAllocated(abbrev, chapter)) {
+      print('dados guardados retornados');
       final bibleModel = wholeBible[abbrev]![chapter]!;
       return bibleModel;
     } else {
+      print('buscado dados novos');
       final bibleModel = await _search(abbrev, chapter);
       _addBible(bibleModel);
+      print(wholeBible);
       return bibleModel;
     }
   }
