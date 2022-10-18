@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/pages/bible/views/bible_tab.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
-import 'package:pregue_a_palavra/src/pages/cart/cart_tab.dart';
 import 'package:pregue_a_palavra/src/pages/home/home_tab.dart';
 import 'package:pregue_a_palavra/src/pages/orders/orders_tab.dart';
-import 'package:pregue_a_palavra/src/pages/profile/profile_tab.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({Key? key}) : super(key: key);
@@ -25,9 +23,7 @@ class _BaseScreenState extends State<BaseScreen> {
         controller: pageController,
         children: const [
           HomeTab(),
-          CartTab(),
           OrderTab(),
-          ProfileTab(),
           BibleTab(),
         ],
       ),
@@ -50,16 +46,8 @@ class _BaseScreenState extends State<BaseScreen> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined),
-              label: "Compras",
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.list),
               label: "Pedidos",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "Perfil",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.book_sharp),

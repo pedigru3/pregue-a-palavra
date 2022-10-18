@@ -17,6 +17,7 @@ class _ProfileTabState extends State<ProfileTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         backgroundColor: CustomColors.primaryColor,
         title: const Text('Perfil'),

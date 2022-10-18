@@ -1,12 +1,12 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:get/get.dart';
 import 'package:pregue_a_palavra/src/config/app_data.dart' as app_data;
 import 'package:pregue_a_palavra/src/models/item_model.dart';
 import 'package:pregue_a_palavra/src/pages/common_widgets/custom_text_field.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
 import 'package:pregue_a_palavra/src/pages/home/components/category_tile.dart';
+import 'package:pregue_a_palavra/src/pages/home/components/custom_drawer.dart';
 import 'package:pregue_a_palavra/src/pages/home/components/item_tile.dart';
 import '../cart/cart_tab.dart';
 
@@ -26,8 +26,11 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //Draw
+      drawer: const CustomDrawer(),
       // App bar
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.blue),
         toolbarHeight: 100,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -47,7 +50,7 @@ class _HomeTabState extends State<HomeTab> {
               },
               child: Badge(
                 position: const BadgePosition(top: 10, start: 10),
-                badgeColor: CustomColors.primaryColor,
+                badgeColor: CustomColors.secondaryColor,
                 badgeContent: const Text(
                   '2',
                   style: TextStyle(color: Colors.white),
