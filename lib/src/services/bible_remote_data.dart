@@ -1,10 +1,12 @@
+import 'package:pregue_a_palavra/src/constants/books_bible.dart';
 import 'package:pregue_a_palavra/src/constants/endpoints.dart';
 import 'package:pregue_a_palavra/src/models/bible_model.dart';
 import 'package:pregue_a_palavra/src/services/http_manager.dart';
 
-class BibleRepository {
+class BibleRemoteDataService {
   final HttpManager _httpmanager = HttpManagerBible();
-  getverses(
+
+  Future getverses(
     String abbrev,
     int chapter,
   ) async {
@@ -13,9 +15,15 @@ class BibleRepository {
       method: HttpMethods.get,
     );
     if (result["verses"] != null) {
-      return result;
+      var bibleModel = BibleModel.fromJson(result);
+      //Adiciona o BOOK para n retornar nulo
+      final books = BooksBible.books.where((e) {
+        final match = e.abbrev.pt;
+        return match.contains(bibleModel.book.abbrev.pt);
+      }).toList();
+      return bibleModel.copyWith(book: books.first);
     } else {
-      print('erro ao buscar dados no servidor');
+      throw Exception('Erro ao buscar dados no servidor');
     }
   }
 

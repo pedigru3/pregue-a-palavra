@@ -1,29 +1,21 @@
-import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/constants/default_chapter.dart';
+import 'package:pregue_a_palavra/src/interfaces/local_storage_interface.dart';
 import 'package:pregue_a_palavra/src/models/bible_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pregue_a_palavra/src/services/shared_local_storage_service.dart';
 
-class AppSettings extends ChangeNotifier {
-  SharedPreferences? _prefs;
+class AppSettings {
+  ILocalStorage localStorage = SharedLocalStorageService();
 
   BibleModel defaultChapter = BibleModel.fromJson(DefaultChapter.genesis);
 
-  Future<void> _startPreferences() async {
-    _prefs ??= await SharedPreferences.getInstance();
+  Future<void> saveChapter(BibleModel bibleModel) async {
+    String bibleJson = bibleModelToJson(bibleModel);
+    await localStorage.put('bibleJson', bibleJson);
   }
 
-  Future<void> save(BibleModel bibleModel) async {
-    await _startPreferences();
-    print('salvando no banco de dados');
-    final bibleJson = bibleModelToJson(bibleModel);
-    await _prefs!.setString('bibleJson', bibleJson);
-  }
-
-  Future<BibleModel> getData() async {
-    await _startPreferences();
-    print('recuperando do banco de dados');
+  Future<BibleModel> getChapter() async {
     final data =
-        _prefs!.getString('bibleJson') ?? bibleModelToJson(defaultChapter);
+        await localStorage.get('bibleJson') ?? bibleModelToJson(defaultChapter);
     return bibleModelFromJson(data);
   }
 }

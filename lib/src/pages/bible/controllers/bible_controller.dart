@@ -1,19 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/foundation.dart';
-
 import 'package:pregue_a_palavra/src/constants/books_bible.dart';
 import 'package:pregue_a_palavra/src/constants/default_chapter.dart';
 import 'package:pregue_a_palavra/src/models/bible_model.dart';
-import 'package:pregue_a_palavra/src/pages/bible/controllers/bible_db.dart';
+import 'package:pregue_a_palavra/src/repositories/bible_repository.dart';
 import 'package:pregue_a_palavra/src/services/app_settings.dart';
 
-class BibleController extends ChangeNotifier with BibleDb {
+class BibleController extends ChangeNotifier {
   bool isLoading = false;
 
   final abbrevs = BooksBible.books.map((e) => e.abbrev.pt).toList();
   final chapters = BooksBible.books.map((e) => e.chapters).toList();
 
-  final AppSettings _prefs = AppSettings();
+  final bibleRepository = BibleRepository();
 
   BibleController() {
     _initalGetData();
@@ -21,22 +20,27 @@ class BibleController extends ChangeNotifier with BibleDb {
 
   BibleModel bible = BibleModel.fromJson(DefaultChapter.genesis);
 
+  AppSettings settings = AppSettings();
+
   String abbrev = 'gn';
 
   int chapter = 1;
 
   _initalGetData() async {
     isLoading = true;
-    bible = await _prefs.getData();
+    bible = await settings.getChapter();
+    chapter = bible.chapter.number;
     isLoading = false;
     notifyListeners();
   }
 
   Future<void> search() async {
     isLoading = true;
-    bible = await getData(abbrev, chapter);
+    bible = await bibleRepository.getData(abbrev, chapter);
+    bible = bible.copyWith();
     isLoading = false;
-    _prefs.save(bible);
+    settings.saveChapter(bible);
+    bibleRepository.save(bible);
     notifyListeners();
   }
 
@@ -65,6 +69,8 @@ class BibleController extends ChangeNotifier with BibleDb {
       chapter--;
       search();
       notifyListeners();
+    } else {
+      previousBook();
     }
   }
 
@@ -92,10 +98,11 @@ class BibleController extends ChangeNotifier with BibleDb {
     notifyListeners();
   }
 
-  void selecionar(int index) async {
+  void selecionar(int index) {
     bible.verses[index].isSelected = !bible.verses[index].isSelected;
     bible = bible.copyWith();
+    settings.saveChapter(bible);
+    bibleRepository.save(bible);
     notifyListeners();
-    await _prefs.save(bible);
   }
 }

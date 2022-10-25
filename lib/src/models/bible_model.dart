@@ -156,10 +156,12 @@ class Verse {
   factory Verse.fromJson(Map<String, dynamic> json) => Verse(
         number: json["number"],
         text: json["text"],
+        isSelected: json["isSelected"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
         "number": number,
         "text": text,
+        "isSelected": isSelected,
       };
 }

@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pregue_a_palavra">
+    <uses-permission android:name="android.permission.INTERNET"/> 
    <application
         android:label="Pregue a Palavra"
         android:name="${applicationName}"
