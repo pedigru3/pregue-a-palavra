@@ -1,9 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pregue_a_palavra/src/interfaces/http_manager_interface.dart';
 import 'package:pregue_a_palavra/src/models/bible_model.dart';
-import 'package:pregue_a_palavra/src/services/http_manager.dart';
+import 'package:pregue_a_palavra/src/services/http/http_manager_bible.dart';
 
 void main() {
-  HttpManager bibleRequest = HttpManagerBible();
+  IHttpManager bibleRequest = HttpManagerBible();
   const String url = 'https://www.abibliadigital.com.br/api/verses/nvi/sl/23';
 
   test('retorna abreviação correta', () async {

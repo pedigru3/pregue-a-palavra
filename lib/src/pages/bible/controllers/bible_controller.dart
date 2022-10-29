@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:pregue_a_palavra/src/constants/books_bible.dart';
 import 'package:pregue_a_palavra/src/constants/default_chapter.dart';
 import 'package:pregue_a_palavra/src/models/bible_model.dart';
-import 'package:pregue_a_palavra/src/repositories/bible_repository.dart';
+import 'package:pregue_a_palavra/src/pages/bible/repositories/bible_repository.dart';
 import 'package:pregue_a_palavra/src/services/app_settings.dart';
 
 class BibleController extends ChangeNotifier {
@@ -26,9 +26,12 @@ class BibleController extends ChangeNotifier {
 
   int chapter = 1;
 
+  String version = 'nvi';
+
   _initalGetData() async {
     isLoading = true;
     bible = await settings.getChapter();
+    abbrev = bible.book.abbrev.pt;
     chapter = bible.chapter.number;
     isLoading = false;
     notifyListeners();
@@ -36,11 +39,18 @@ class BibleController extends ChangeNotifier {
 
   Future<void> search() async {
     isLoading = true;
-    bible = await bibleRepository.getData(abbrev, chapter);
+    bible = await bibleRepository.getData(abbrev, chapter, version);
     bible = bible.copyWith();
     isLoading = false;
     settings.saveChapter(bible);
     bibleRepository.save(bible);
+    notifyListeners();
+  }
+
+  void setVersion(String newVersion) {
+    version = newVersion;
+    print(version);
+    search();
     notifyListeners();
   }
 
@@ -93,7 +103,7 @@ class BibleController extends ChangeNotifier {
       index--;
     }
     abbrev = newList.elementAt(index);
-    chapter = 1;
+    chapter = BooksBible.books.elementAt(index).chapters!;
     search();
     notifyListeners();
   }

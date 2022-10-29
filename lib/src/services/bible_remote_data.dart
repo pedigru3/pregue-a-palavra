@@ -1,17 +1,20 @@
 import 'package:pregue_a_palavra/src/constants/books_bible.dart';
 import 'package:pregue_a_palavra/src/constants/endpoints.dart';
 import 'package:pregue_a_palavra/src/models/bible_model.dart';
-import 'package:pregue_a_palavra/src/services/http_manager.dart';
+import 'package:pregue_a_palavra/src/services/http/http_manager_bible.dart';
+
+import '../interfaces/http_manager_interface.dart';
 
 class BibleRemoteDataService {
-  final HttpManager _httpmanager = HttpManagerBible();
+  final IHttpManager _httpmanager = HttpManagerBible();
 
   Future getverses(
     String abbrev,
     int chapter,
+    String version,
   ) async {
     final result = await _httpmanager.reqRequest(
-      url: '${Endpoints.bibleBaseUrl}/verses/nvi/$abbrev/$chapter',
+      url: '${Endpoints.bibleBaseUrl}/verses/$version/$abbrev/$chapter',
       method: HttpMethods.get,
     );
     if (result["verses"] != null) {

@@ -125,14 +125,16 @@ class SignInScreen extends StatelessWidget {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 FocusScope.of(context).unfocus();
-                                authController.sigIn(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                );
-                                Navigator.of(context)
-                                    .pushReplacementNamed(PagesRoute.baseRoute);
-                              } else {
-                                print('Campos não válidos');
+                                authController
+                                    .sigIn(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    )
+                                    .then((value) => authController.isLoggedIn
+                                        ? Navigator.of(context)
+                                            .pushReplacementNamed(
+                                                PagesRoute.baseRoute)
+                                        : null);
                               }
                             },
                             style: ElevatedButton.styleFrom(

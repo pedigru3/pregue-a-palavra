@@ -1,5 +1,10 @@
-import 'package:pregue_a_palavra/src/interfaces/local_storage_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+abstract class ILocalStorage {
+  Future get(String key);
+  Future delete(String key);
+  Future put(String key, String value);
+}
 
 class SharedLocalStorageService implements ILocalStorage {
   @override

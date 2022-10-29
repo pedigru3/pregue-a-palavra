@@ -4,7 +4,6 @@ import 'package:pregue_a_palavra/src/pages/auth/controller/auth_controller.dart'
 import 'package:pregue_a_palavra/src/pages/bible/controllers/bible_controller.dart';
 import 'package:pregue_a_palavra/src/pages/cart/controllers/cart_controller.dart';
 import 'package:pregue_a_palavra/src/pages_routes/app_pages.dart';
-import 'package:pregue_a_palavra/src/services/app_settings.dart';
 import 'package:provider/provider.dart';
 
 void main() {

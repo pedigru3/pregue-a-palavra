@@ -14,16 +14,19 @@ class BibleRepository {
     localStorage.put(key, bibleJson);
   }
 
-  Future<BibleModel> getData(String abbrev, int chapter) async {
-    String key = '$abbrev$chapter';
+  Future<BibleModel> getData(String abbrev, int chapter, String version) async {
+    String key = '$version$abbrev$chapter';
     var data = await localStorage.get(key);
-    if (data == null) return await bibleRemoteData.getverses(abbrev, chapter);
+    if (data == null) {
+      return await bibleRemoteData.getverses(abbrev, chapter, version);
+    }
     return bibleModelFromJson(data);
   }
 
   String _generateKey(BibleModel bibleModel) {
     String abbrev = bibleModel.book.abbrev.pt;
     String chapter = bibleModel.chapter.number.toString();
-    return '$abbrev$chapter';
+    String version = bibleModel.book.version!;
+    return '$version$abbrev$chapter';
   }
 }

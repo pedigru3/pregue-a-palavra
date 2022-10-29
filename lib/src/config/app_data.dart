@@ -47,11 +47,13 @@ List<CartItemModel> cartItems = [
 ];
 
 UserModel user = UserModel(
-  name: 'Felipe Ferreira da Silva',
+  fullname: 'Felipe Ferreira da Silva',
   email: 'ferreira@pregueapalavra.com',
   phone: '(11) 94344-4434',
   cpf: '432.532.095-56',
   password: '123abc',
+  id: '',
+  token: '',
 );
 
 List<OrderModel> orders = [

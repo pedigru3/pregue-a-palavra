@@ -45,7 +45,7 @@ class _ProfileTabState extends State<ProfileTab> {
             isDarkMode: false,
             prefixIcon: Icons.person,
             labelText: 'Nome',
-            initialValue: appData.user.name,
+            initialValue: appData.user.fullname,
           ),
 
           //Celular

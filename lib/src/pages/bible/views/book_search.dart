@@ -25,7 +25,14 @@ class BookSearch extends SearchDelegate {
 
   @override
   Widget? buildLeading(BuildContext context) {
-    return IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back));
+    return IconButton(
+        onPressed: () {
+          if (query == '') {
+            close(context, null);
+          }
+          query = '';
+        },
+        icon: const Icon(Icons.arrow_back));
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pregue_a_palavra/src/config/custom_colors.dart';
+import 'package:pregue_a_palavra/src/pages/bible/components/buttom_version.dart';
 import 'package:pregue_a_palavra/src/pages/bible/controllers/bible_controller.dart';
 import 'package:pregue_a_palavra/src/pages/bible/views/book_search.dart';
 import 'package:pregue_a_palavra/src/pages/bible/views/chapters_view.dart';
@@ -20,6 +21,17 @@ class _BibleTabState extends State<BibleTab> {
 
   bool active = false;
   Direction direction = Direction.none;
+  double positionStart = 0.0;
+  double positionEnd = 0.0;
+
+  _onHorizontalDragEnd(DragEndDetails details, BibleController controller) {
+    if (direction == Direction.rigth && positionEnd - positionStart > 50) {
+      controller.previousBook();
+    } else if (direction == Direction.left &&
+        positionStart - positionEnd > 50) {
+      controller.nextBook();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,19 +94,7 @@ class _BibleTabState extends State<BibleTab> {
                   const SizedBox(width: 1),
 
                   // ---- BOTAO VERSAO------------
-                  Container(
-                    decoration: BoxDecoration(
-                        color: CustomColors.primaryColor,
-                        borderRadius: const BorderRadius.horizontal(
-                            right: Radius.circular(20))),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                      child: Text(
-                        controller.bible.book.version ?? 'NVI',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
+                  ButtomVersion(),
                   const Expanded(
                     child: SizedBox(),
                   ),
@@ -126,20 +126,19 @@ class _BibleTabState extends State<BibleTab> {
               child: Stack(
                 children: [
                   GestureDetector(
+                      onHorizontalDragStart: (details) {
+                        positionStart = details.globalPosition.dx;
+                      },
                       onHorizontalDragUpdate: ((details) {
+                        positionEnd = details.globalPosition.dx;
                         if (details.delta.dx > 0) {
                           direction = Direction.rigth;
                         } else if (details.delta.dx < 0) {
                           direction = Direction.left;
                         }
                       }),
-                      onHorizontalDragEnd: (details) {
-                        if (direction == Direction.rigth) {
-                          controller.previousBook();
-                        } else if (direction == Direction.left) {
-                          controller.nextBook();
-                        }
-                      },
+                      onHorizontalDragEnd: (details) =>
+                          _onHorizontalDragEnd(details, controller),
                       child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Visibility(
